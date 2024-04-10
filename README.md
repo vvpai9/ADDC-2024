@@ -155,7 +155,8 @@ error: subprocess-exited-with-error
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
 ```
-Clone the OpenCV Librrary using ```git clone```
+Clone the OpenCV Library using ```git clone```
+
 Run the following commands:
 ```
 pip3 uninstall opencv-python
@@ -192,6 +193,56 @@ sudo make install
 Install cv2:
 ```
 pip3 install cv2
+```
+
+# Integrate Raspberry Pi with Pixhawk
+1. Set following parameters in mission planner:
+```SERIAL2_PROTOCOL = 2```
+```SERIAL2_BAUD = 921```
+```LOG_BACKEND_TYPE = 3```
+
+2. Connect Pixhawk and Raspberry Pi as shown in the figure:
+
+![f837b6b1116ec02c3490e34035c2f09da5a62936](https://github.com/vvpai9/OpenCV-Detection/assets/162291797/f1a79c68-ce5e-46aa-9fdd-fc60bfb1db5b)
+
+3. Power the Raspberry Pi using BEC module.
+
+a) Check port
+```
+ls /dev/ttyAMA0
+```
+
+
+b) Add the following two lines at bottom of file ```sudo nano /boot/config.txt``` ,if not there
+```
+enable_uart=1
+dtoverlay=disable-bt
+```
+
+4. Now type the following to get the telemetry data of Pixhawk:
+```
+mavproxy.py --master=/dev/ttyAMA0 --baudrate 921600
+```
+
+5. Type the following if you want telemetry data to be displayed in Mission Planner:
+```
+mavproxy.py --master=/dev/serial0 --baudrate 921600 --out udp:127.0.0.1:14552
+
+/*Here,
+ '127.0.0.1' Your PC's IP Adress, Obtained by typing 'ipconfig' in command prompt
+ '14552' is the port to which you need to connect to mission planner using UDP
+*/
+```
+
+ 6. To run Python code:
+In Terminal 1, run:
+```
+python3 optimise.py
+```
+
+In Terminal 2, run:
+```
+python3 vel.py
 ```
 
 
