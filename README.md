@@ -197,9 +197,15 @@ pip3 install cv2
 
 # Integrate Raspberry Pi with Pixhawk
 1. Set following parameters in mission planner:
+
+
 ```SERIAL2_PROTOCOL = 2```
+
 ```SERIAL2_BAUD = 921```
+
 ```LOG_BACKEND_TYPE = 3```
+
+
 
 2. Connect Pixhawk and Raspberry Pi as shown in the figure:
 
