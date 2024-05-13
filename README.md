@@ -248,7 +248,7 @@ python3 optimise.py
 
 In Terminal 2, run:
 ```
-python3 vel.py
+python3 vel.py --connect /dev/ttyAMA0
 ```
 
 
