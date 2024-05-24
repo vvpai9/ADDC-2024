@@ -43,12 +43,71 @@ h) Reboot the Raspberry Pi when you are done.
 
 i) The Raspberry Pi’s serial port will now be usable on ```/dev/ttyAMA0```.
 
-# OpenCV Installation
-Type the following in terminal:
+6. Type the following in terminal:
 ```
-pip3 install opencv-python
+pip install opencv-python
 ```
-NOTE: If this installation is stuck at ```building wheel for opencv-python (PEP 517)``` or is giving the following error:
+NOTE: Refer to the troubleshooting section if any errors arise.
+
+
+# Integrate Raspberry Pi with Pixhawk
+1. Set following parameters in mission planner:
+
+
+```SERIAL2_PROTOCOL = 2```
+
+```SERIAL2_BAUD = 921```
+
+```LOG_BACKEND_TYPE = 3```
+
+
+
+2. Connect Pixhawk and Raspberry Pi as shown in the figure:
+
+![f837b6b1116ec02c3490e34035c2f09da5a62936](https://github.com/vvpai9/OpenCV-Detection/assets/162291797/f1a79c68-ce5e-46aa-9fdd-fc60bfb1db5b)
+
+3. Power the Raspberry Pi using BEC module.
+
+a) Check port
+```
+ls /dev/ttyAMA0
+```
+
+
+b) Add the following two lines at bottom of file ```sudo nano /boot/config.txt``` ,if not there
+```
+enable_uart=1
+dtoverlay=disable-bt
+```
+
+4. Now type the following to get the telemetry data of Pixhawk:
+```
+mavproxy.py --master=/dev/ttyAMA0 --baudrate 921600
+```
+
+5. Type the following if you want telemetry data to be displayed in Mission Planner:
+```
+mavproxy.py --master=/dev/serial0 --baudrate 921600 --out udp:127.0.0.1:14552
+
+/*Here,
+ '127.0.0.1' Your PC's IP Adress, Obtained by typing 'ipconfig' in command prompt
+ '14552' is the port to which you need to connect to mission planner using UDP
+*/
+```
+
+ 6. To run Python code:
+In Terminal 1, run:
+```
+python3 optimise.py
+```
+
+In Terminal 2, run:
+```
+python3 vel.py --connect /dev/ttyAMA0
+```
+
+# Troubleshooting
+If the following error arises during the installation of OpenCV
 ```
 Defaulting to user installation because normal site-packages is not writeable
 Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
@@ -155,101 +214,97 @@ error: subprocess-exited-with-error
 
 note: This error originates from a subprocess, and is likely not a problem with pip.
 ```
-Clone the OpenCV Library using ```git clone```
+Method 1: 
+1. Install OpenSSL Development Libraries: Ensure that the necessary OpenSSL libraries and headers are installed. You can do this by running:
+```
+sudo apt-get update
+sudo apt-get install libssl-dev
+```
+2. Install CMake: If CMake is not already installed, or if you have an older version, install or upgrade it. You can install CMake via your package manager or download the latest version directly from the CMake website.
+```
+sudo apt-get install cmake
+```
+3. Ensure You Have pip and setuptools Updated: Sometimes, issues with building packages can be resolved by updating ```pip``` and ```setuptools```.
+```
+pip3 install --upgrade pip setuptools
+```
+4. Install Additional Dependencies: Some additional dependencies might be required for building OpenCV. Install them by running:
+```
+sudo apt-get install build-essential pkg-config
+sudo apt-get install libjpeg-dev libtiff-dev libpng-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install libgtk2.0-dev libcanberra-gtk*
+sudo apt-get install libxvidcore-dev libx264-dev
+sudo apt-get install libatlas-base-dev gfortran
+```
+5. Retry Installation: After ensuring all dependencies are installed, try installing ```opencv-python``` again.
+```
+pip3 install opencv-python
+```
 
-Run the following commands:
+Method 2: 
+If Method 1 fails, consider using the pre-built OpenCV packages from the Ubuntu repositories, which are easier to install and maintain:
+```
+sudo apt-get install python3-opencv
+```
+This command installs the OpenCV library for Python, and it should be sufficient for most use cases.
+
+
+
+Method 3: Clone the OpenCV Library using ```git clone```
+
+NOTE: Use this method only if the above two methods fail. Cloning and building the library takes a lot of time.
+
+1. Run the following commands:
 ```
 pip3 uninstall opencv-python
 sudo apt update
 sudo apt upgrade
 ```
-Install the necessary dependencies for building OpenCV:
+2. Install the necessary dependencies for building OpenCV:
 ```
 sudo apt install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
 sudo apt install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
 ```
-Clone the OpenCV repository from GitHub:
+3. Clone the OpenCV repository from GitHub:
 ```
 git clone https://github.com/opencv/opencv.git
 ```
-Navigate to the directory where you cloned OpenCV and create a build directory:
+4. Navigate to the directory where you cloned OpenCV and create a build directory:
 ```
 cd opencv
 mkdir build
 cd build
 ```
-Configure the build with cmake:
+5. Configure the build with cmake:
 ```
 cmake ..
 ```
-Build OpenCV: (This takes time)
+6. Build OpenCV: (This takes time)
 ```
 make -j$(nproc)
 ```
-Install OpenCV:
+7. Install OpenCV:
 ```
 sudo make install
 ```
-Install cv2:
+8. Install cv2:
 ```
 pip3 install cv2
 ```
 
-# Integrate Raspberry Pi with Pixhawk
-1. Set following parameters in mission planner:
-
-
-```SERIAL2_PROTOCOL = 2```
-
-```SERIAL2_BAUD = 921```
-
-```LOG_BACKEND_TYPE = 3```
-
-
-
-2. Connect Pixhawk and Raspberry Pi as shown in the figure:
-
-![f837b6b1116ec02c3490e34035c2f09da5a62936](https://github.com/vvpai9/OpenCV-Detection/assets/162291797/f1a79c68-ce5e-46aa-9fdd-fc60bfb1db5b)
-
-3. Power the Raspberry Pi using BEC module.
-
-a) Check port
+# Verify Installation
+Type the following in terminal to verify the installation of OpenCV
 ```
-ls /dev/ttyAMA0
+python3
 ```
-
-
-b) Add the following two lines at bottom of file ```sudo nano /boot/config.txt``` ,if not there
 ```
-enable_uart=1
-dtoverlay=disable-bt
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import cv2
+>>>
 ```
-
-4. Now type the following to get the telemetry data of Pixhawk:
-```
-mavproxy.py --master=/dev/ttyAMA0 --baudrate 921600
-```
-
-5. Type the following if you want telemetry data to be displayed in Mission Planner:
-```
-mavproxy.py --master=/dev/serial0 --baudrate 921600 --out udp:127.0.0.1:14552
-
-/*Here,
- '127.0.0.1' Your PC's IP Adress, Obtained by typing 'ipconfig' in command prompt
- '14552' is the port to which you need to connect to mission planner using UDP
-*/
-```
-
- 6. To run Python code:
-In Terminal 1, run:
-```
-python3 optimise.py
-```
-
-In Terminal 2, run:
-```
-python3 vel.py --connect /dev/ttyAMA0
-```
+The ```cv2 ``` module should be imported into Python without any errors. This indicates that OpenCV module is corretly installed.
 
 
 
