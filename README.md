@@ -43,11 +43,11 @@ h) Reboot the Raspberry Pi when you are done.
 
 i) The Raspberry Pi’s serial port will now be usable on ```/dev/ttyAMA0```.
 
-6. Type the following in terminal:
+6. Install OpenCV:
 ```
 pip install opencv-python
 ```
-NOTE: Refer to the troubleshooting section if any errors arise.
+NOTE: Refer to the troubleshooting section if any errors are raised.
 
 
 # Integrate Raspberry Pi with Pixhawk
