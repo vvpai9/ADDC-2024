@@ -35,7 +35,7 @@ d) Enable VNC
 
 e) Go to serial
 
-f) When prompted, select yes to 'Would you like a login shell to be accessible over serial?'
+f) When prompted, select no to 'Would you like a login shell to be accessible over serial?'
 
 g) When prompted, select yes to 'Would you like the serial port hardware to be enabled?'.
 
