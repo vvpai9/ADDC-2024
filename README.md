@@ -103,7 +103,7 @@ python3 optimise.py
 
 In Terminal 2, run:
 ```
-python3 vel.py --connect /dev/ttyAMA0
+python3 mission.py --connect /dev/ttyAMA0
 ```
 
 # Troubleshooting
