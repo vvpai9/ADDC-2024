@@ -6,12 +6,12 @@ import os
 cap = cv2.VideoCapture(-1)
 
 # Variable to control frame skipping
-skip_frames = 5  # Skip every 5 frames, adjust as needed
+#skip_frames = 5  # Skip every 5 frames, adjust as needed
 
 while True:
     # Skip frames
-    for _ in range(skip_frames):
-        cap.grab()
+    #for _ in range(skip_frames):
+     #   cap.grab()
     
     # Capture frame
     ret, frame = cap.read()
@@ -23,8 +23,8 @@ while True:
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # Define lower and upper bounds for orange color in HSV
-    lower_orange = np.array([5, 100, 100])
-    upper_orange = np.array([15, 255, 255])
+    lower_orange = np.array([0, 0, 200])
+    upper_orange = np.array([180, 50, 255])
 
     # Threshold the HSV frame to create a mask for orange colors
     orange_mask = cv2.inRange(hsv, lower_orange, upper_orange)
@@ -52,10 +52,10 @@ while True:
             cy = int(M["m01"] / M["m00"])
             print("Xcoordinate",cx)
             print("Ycoordinate",cy)
-            f=open("xa","a")
+            f=open("xa.txt","a")
             f.write(str(cx))
             f.write("\n")
-            f=open("yb","a")
+            f=open("yb.txt","a")
             f.write(str(cy))
             f.write("\n")
             # Draw a circle at the centroid
@@ -71,4 +71,3 @@ while True:
 # Release the webcam and close all windows
 cap.release()
 cv2.destroyAllWindows()
-
