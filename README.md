@@ -304,7 +304,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import cv2
 >>>
 ```
-The ```cv2 ``` module should be imported into Python without any errors. This indicates that OpenCV module is corretly installed.
+The ```cv2 ``` module should be imported into Python without any errors. This indicates that OpenCV module is correctly installed.
 
 
 
