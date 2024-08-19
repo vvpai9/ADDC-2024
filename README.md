@@ -39,7 +39,7 @@ f) When prompted, select no to 'Would you like a login shell to be accessible ov
 
 g) When prompted, select yes to 'Would you like the serial port hardware to be enabled?'.
 
-h) Reboot the Raspberry Pi when you are done.
+h) Reboot the Raspberry Pi using ```sudo reboot``` when you are done.
 
 i) The Raspberry Pi’s serial port will now be usable on ```/dev/ttyAMA0```.
 
