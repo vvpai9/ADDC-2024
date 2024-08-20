@@ -1,29 +1,16 @@
 # OpenCV-Detection
-# Setting up Raspberry Pi
-1. Using 'Rasbperry Pi Imager', install Raspberry Pi OS onto the SD Card.
+
+# Setting up Raspberry Pi 4
+
+1. Using 'Rasbperry Pi Imager', install Raspberry Pi OS compatible with the Raspberry Pi 4 (Recommended: Raspberry Pi OS (Debian Bullseye) Legacy 32-Bit Full with Desktop environment and recommended applications) onto the SD Card (Recommended: Class 10 32 GB Micro SD Card).
+
 2. Access the Raspberry Pi through Wi-Fi via SSH
-3. Run the following commands:
-```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install python3-pip
-sudo apt-get install python-dev
-sudo pip install future
-sudo apt-get install screen
-sudo apt-get install python-wxgtk4.*
-sudo apt-get install libxml2-dev
-sudo apt-get install libxslt1-dev
-pip install lxml
-sudo pip3 install pyserial
-sudo pip3 install dronekit
-sudo pip3 install geopy
-sudo pip3 install MAVProxy
-```
-4. Set up serial connection and type the following in SSH:
+  
+3. Set up serial connection and type the following in SSH:
 ```
 sudo raspi-config
 ```
-5. Change the folowing settings:
+4. Change the folowing settings:
 
 a) Go to interface settings
 
@@ -42,6 +29,32 @@ g) When prompted, select yes to 'Would you like the serial port hardware to be e
 h) Reboot the Raspberry Pi using ```sudo reboot``` when you are done.
 
 i) The Raspberry Pi’s serial port will now be usable on ```/dev/ttyAMA0```.
+
+If you encounter ```Cannot currently show the Desktop```, go to ```sudo nano /boot/config.txt``` and type the following lines after ```#hdmi_safe=1```:
+```
+hdmi_force_hotplug=1
+hdmi_group=2
+hdmi_mode=9
+```
+Save the file and exit the text editor (in ```nano```, you do this by pressing CTRL + X, then Y, and Enter).
+
+4. Run the following commands:
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python3-pip
+sudo apt-get install python-dev
+sudo pip install future
+sudo apt-get install screen
+sudo apt-get install python-wxgtk4.*
+sudo apt-get install libxml2-dev
+sudo apt-get install libxslt1-dev
+pip install lxml
+sudo pip3 install pyserial
+sudo pip3 install dronekit
+sudo pip3 install geopy
+sudo pip3 install MAVProxy
+```
 
 6. Install OpenCV:
 ```
@@ -74,11 +87,12 @@ ls /dev/ttyAMA0
 ```
 
 
-b) Add the following two lines at bottom of file ```sudo nano /boot/config.txt``` ,if not there
+b) Add the following two lines at bottom of file ```sudo nano /boot/config.txt``` :
 ```
 enable_uart=1
 dtoverlay=disable-bt
 ```
+Save the file and exit the text editor (in ```nano```, you do this by pressing CTRL + X, then Y, and Enter).
 
 4. Now type the following to get the telemetry data of Pixhawk:
 ```
