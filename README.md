@@ -1,6 +1,8 @@
-# OpenCV-Detection
+# Autonomous Drone Development Challenge (ADDC) 2024
 
-# Setting up Raspberry Pi 4
+This repository contains the approach used by aeroKLE for SAEISS ADDC 2024, KCG College of Technology held from 16th July 2024 to 18th July 2024
+
+# Setting up Raspberry Pi 4 Model B
 
 1. Using 'Rasbperry Pi Imager', install Raspberry Pi OS compatible with the Raspberry Pi 4 (Recommended: Raspberry Pi OS (Debian Bullseye) Legacy 32-Bit Full with Desktop environment and recommended applications) onto the SD Card (Recommended: Class 10 32 GB Micro SD Card).
 
@@ -63,8 +65,8 @@ pip install opencv-python
 NOTE: Refer to the troubleshooting section if any errors are raised.
 
 
-# Integrate Raspberry Pi with Pixhawk
-1. Set following parameters in mission planner:
+# Integrate Raspberry Pi with PixHawk
+1. Set following parameters in Mission Planner:
 
 
 ```SERIAL2_PROTOCOL = 2```
@@ -75,7 +77,7 @@ NOTE: Refer to the troubleshooting section if any errors are raised.
 
 
 
-2. Connect Pixhawk and Raspberry Pi as shown in the figure:
+2. Connect PixHawk and Raspberry Pi as shown in the figure:
 
 ![f837b6b1116ec02c3490e34035c2f09da5a62936](https://github.com/vvpai9/OpenCV-Detection/assets/162291797/f1a79c68-ce5e-46aa-9fdd-fc60bfb1db5b)
 
@@ -94,7 +96,7 @@ dtoverlay=disable-bt
 ```
 Save the file and exit the text editor (in ```nano```, you do this by pressing CTRL + X, then Y, and Enter).
 
-4. Now type the following to get the telemetry data of Pixhawk:
+4. Now type the following to get the telemetry data of PixHawk:
 ```
 mavproxy.py --master=/dev/ttyAMA0 --baudrate 921600
 ```
@@ -105,11 +107,12 @@ mavproxy.py --master=/dev/serial0 --baudrate 921600 --out udp:127.0.0.1:14552
 
 /*Here,
  '127.0.0.1' Your PC's IP Adress, Obtained by typing 'ipconfig' in command prompt
- '14552' is the port to which you need to connect to mission planner using UDP
+ '14552' is the port to which you need to connect to Mission Planner using UDP
 */
 ```
+# Executing the mission
 
- 6. To run Python code:
+To run Python code:
 In Terminal 1, run:
 ```
 python3 optimise.py
